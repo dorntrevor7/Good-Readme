@@ -1,11 +1,11 @@
-// NodeRequirer
+// Modules
 var inquirer = require("inquirer");
 var fs = require('fs');
 
 // prompts the user questions to put in their repo using inquirer npm
 inquirer.prompt([
     {
-        type: "checkbox",
+        type: "list",
         message: "What kind of license should your project have?",
         name: "license",
         choices: [
@@ -50,24 +50,18 @@ inquirer.prompt([
         type: "input",
         message: "What does the user need to know about contributing to the repo?",
         name: "contributingRepo",
-    },
-    {
-        type: "input",
-        message: "Table of contents in the repo",
-        name: "tableContents",
     }
 
     // Creates a promise function after the prompts
 ]).then(function (data) {
     // Appends the answers from the prompts to a README.md file and passes 
     // through the function readMe with params of data and creates an err function
-    fs.appendFile("README.md", readMe(data), function (err) {
+    fs.writeFile("README.md", readMe(data), function (err) {
         // If theres an error it will stop
         if (err) {
             return console.log(err);
         }
-        console.log("Success!");
-
+        console.log("Loading...");
     });
 
     // Displays in the README.md
@@ -88,7 +82,14 @@ ${data.description}
 <br>
 
 ## Table of Contents:
-${data.tableContents}
+- [Description](#Description)
+- [Install-Dependencies](#Install-Dependencies)
+- [Test](#Test)
+- [Repository](#Repository)
+- [Contributing](#Contributing)
+- [Followers](#Followers)
+- [Contact](#Contact)
+- [Questions](#Questions)
 
 <br>
 
